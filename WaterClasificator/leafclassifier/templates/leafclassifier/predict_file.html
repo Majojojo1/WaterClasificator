@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Predicción de Archivo</title>
+</head>
+<body>
+
+<h2>Predicción de Archivo</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ predict_form.as_p }}
+    <button type="submit">Predecir</button>
+</form>
+
+</body>
+</html>

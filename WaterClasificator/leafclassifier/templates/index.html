@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WaterClasificator</title>
+</head>
+<body>
+    <h1>Bienvenido a WaterClasificator</h1>
+
+    <h2>Subir conjunto de datos</h2>
+    <form method="post" enctype="multipart/form-data" action="{% url 'upload_file' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2>Realizar Predicción</h2>
+    {% if uploaded_file %}
+        <p>Archivo Cargado: {{ uploaded_file.file.name }}</p>
+        <form method="post" enctype="multipart/form-data" action="{% url 'predict' file_id=uploaded_file.id %}">
+            {% csrf_token %}
+            {{ predict_form.as_p }}
+            <button type="submit">Realizar Predicción</button>
+        </form>
+    {% else %}
+        <p>Primero sube un conjunto de datos para realizar predicciones.</p>
+    {% endif %}
+
+    <h2>Resultados de la Predicción</h2>
+    {% if predictions %}
+        <ul>
+            {% for prediction in predictions %}
+                <li>{{ prediction }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
